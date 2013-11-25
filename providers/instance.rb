@@ -53,7 +53,7 @@ def create_container
   }
   Chef::Log.debug("Creating container with config #{config}")
   lxc_conf = new_resource.lxc_conf.map { |k, v| { "Key" => k, "Value" => v } }
-  container = Docker::Container.create(config).start("Binds" => new_resource.volumes, "LxcConf" => lxc_conf)
+  container = Docker::Container.create(config).start("Binds" => new_resource.volumes, "LxcConf" => lxc_conf, "PortBindings" => new_resource.port_bindings )
   new_resource.updated_by_last_action(true)
   container
 end
